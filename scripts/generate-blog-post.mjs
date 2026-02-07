@@ -136,6 +136,30 @@ function hasRequiredLink(body, targetUrl) {
   });
 }
 
+function ensureRequiredLinks(body, servicePage) {
+  const required = [
+    { url: "/#request-service", label: "Request Service" },
+    { url: "/contact/", label: "Get a Quote" },
+    { url: servicePage, label: "Schedule Repair" },
+    { url: "/tupelo-hvac-guide/", label: "Tupelo HVAC Guide" }
+  ];
+
+  const missing = required.filter((item) => !hasRequiredLink(body, item.url));
+  if (!missing.length) return body;
+
+  const lines = [];
+  lines.push("");
+  lines.push("## Next Steps");
+  lines.push("");
+  lines.push("Use these links for service and follow-up:");
+  for (const item of missing) {
+    lines.push(`- [${item.label}](${item.url})`);
+  }
+  lines.push("");
+
+  return `${body.trim()}\n${lines.join("\n")}`;
+}
+
 async function readJson(filePath, fallback) {
   try {
     const text = await fs.readFile(filePath, "utf8");
@@ -427,6 +451,7 @@ async function main() {
   }
 
   let parsed = parseModelOutput(modelOutput);
+  parsed.body = ensureRequiredLinks(parsed.body, servicePage);
   let slug = toSlug(parsed.title);
   const existingFiles = await listBlogFiles();
   if (existingFiles.some((file) => file.endsWith(`${slug}.md`))) {
@@ -448,6 +473,7 @@ async function main() {
       retryRaw = await callOpenAI(retryPrompt, OPENAI_FALLBACK_MODEL);
     }
     parsed = parseModelOutput(retryRaw);
+    parsed.body = ensureRequiredLinks(parsed.body, servicePage);
     slug = toSlug(parsed.title);
     checks = qualityChecks({
       ...parsed,
