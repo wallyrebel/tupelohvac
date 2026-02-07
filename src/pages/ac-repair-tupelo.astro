@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+---
+
+<BaseLayout
+  title={`AC Repair Tupelo, MS | ${SITE.name}`}
+  description="Need to fix air conditioner issues in Tupelo? Learn common causes, early checks, and when to request local AC repair help."
+  canonical={`${SITE.url}/ac-repair-tupelo/`}
+>
+  <section class="section">
+    <div class="container surface service">
+      <p class="eyebrow">AC Repair Tupelo</p>
+      <h1>Fix Air Conditioner Problems in Tupelo, MS</h1>
+      <p>
+        If your AC is blowing warm air, short cycling, or struggling during humid afternoons, you may need targeted AC
+        repair in Tupelo. Common issues include clogged filters, thermostat mismatch, low refrigerant, and dirty
+        condenser coils.
+      </p>
+      <h2>What to check first</h2>
+      <ul>
+        <li>Replace a dirty return-air filter.</li>
+        <li>Confirm the thermostat is set to cool and fan is auto.</li>
+        <li>Make sure supply vents are open and not blocked.</li>
+        <li>Inspect your outdoor unit for debris buildup.</li>
+      </ul>
+      <p>
+        If the issue continues, request service so a local pro can diagnose safely. For ongoing tune-ups, see
+        <a href="/hvac-maintenance-tupelo/"> HVAC maintenance in Tupelo</a>.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/#request-service">Request Service</a>
+        <a class="button secondary" href="/contact/">Get a Quote</a>
+        <a class="button secondary" href="/tupelo-hvac-guide/">Read the Tupelo HVAC Guide</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service {
+    padding: var(--space-6);
+    max-width: 900px;
+  }
+  .cta-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+---
+
+<BaseLayout
+  title={`Privacy Policy | ${SITE.name}`}
+  description="Privacy policy and lead consent language for TupeloHVAC.com."
+  canonical={`${SITE.url}/privacy-policy/`}
+>
+  <section class="section">
+    <div class="container surface policy">
+      <h1>Privacy Policy</h1>
+      <p><strong>Effective date:</strong> February 7, 2026</p>
+
+      <h2>What We Collect</h2>
+      <p>
+        When you submit the HVAC request form, we collect the information you provide: full name, phone, email,
+        optional ZIP, service type, and message. We also log submission metadata such as timestamp, page URL, and UTM
+        parameters.
+      </p>
+
+      <h2>How We Use Lead Data</h2>
+      <p>
+        We use your data to route your request to local sponsoring HVAC service providers and for internal lead logging
+        in Google Sheets. We do not promise any specific response time or service outcome.
+      </p>
+
+      <h2>Consent Language</h2>
+      <p>
+        By checking the consent box and submitting, you confirm: <em>"I agree to be contacted about my request."</em>
+      </p>
+
+      <h2>Disclosure for Lead Form</h2>
+      <p>
+        TupeloHVAC.com is a lead-generation website. Sponsored placements and provider listings are paid placements and
+        are not endorsements.
+      </p>
+
+      <h2>Anti-Spam and Security</h2>
+      <p>
+        We use Cloudflare Turnstile, honeypot fields, and timing checks to reduce spam submissions. Basic technical
+        data such as user agent and IP metadata may be processed for fraud prevention.
+      </p>
+
+      <h2>Data Retention</h2>
+      <p>
+        Lead records are retained in operational systems (email + Google Sheets) for business follow-up and reporting.
+        You may request deletion by contacting
+        <a href="mailto:myersgrouponline@gmail.com">myersgrouponline@gmail.com</a>.
+      </p>
+
+      <h2>Contact</h2>
+      <p>For privacy questions, contact: <a href="mailto:myersgrouponline@gmail.com">myersgrouponline@gmail.com</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .policy {
+    padding: var(--space-6);
+    max-width: 880px;
+  }
+</style>

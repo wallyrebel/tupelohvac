@@ -1,0 +1,168 @@
+---
+import { getCollection } from "astro:content";
+import AdSlot from "../components/AdSlot.astro";
+import BlogCard from "../components/BlogCard.astro";
+import LeadForm from "../components/LeadForm.astro";
+import SponsorPanel from "../components/SponsorPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { KEYWORDS, SITE } from "../consts";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How does a service request work?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Submit your request form and your details are shared with local sponsoring HVAC service providers who can contact you about the issue."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Do you guarantee same-day responses?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Response times depend on provider availability, weather demand, and your service area."
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={`${SITE.title} | ${SITE.name}`}
+  description={SITE.description}
+  canonical={`${SITE.url}/`}
+  keywords={KEYWORDS}
+  structuredData={faqSchema}
+>
+  <section class="hero section">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Tupelo HVAC</p>
+        <h1>HVAC Sales &amp; Service in Tupelo, MS</h1>
+        <p class="sub">Fast help for AC, heating, repairs, installs, and maintenance.</p>
+        <div class="trust surface">
+          <p><strong>Local service request:</strong> built for Tupelo-area homeowners and property managers.</p>
+          <p><strong>Privacy:</strong> your information is used only to respond to your request.</p>
+          <p><strong>Availability:</strong> no guaranteed response-time claims.</p>
+        </div>
+      </div>
+      <LeadForm formLabel="Enter your info here for HVAC sales and service in Tupelo" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container homepage-grid">
+      <div>
+        <h2>Common HVAC Problems in Tupelo</h2>
+        <div class="card-grid cols-3">
+          <article class="surface problem">
+            <h3>AC Running but Not Cooling</h3>
+            <p>Often tied to dirty coils, clogged filters, low refrigerant, or thermostat setup issues during hot Tupelo summers.</p>
+          </article>
+          <article class="surface problem">
+            <h3>Heating Starts Then Shuts Off</h3>
+            <p>Short-cycling can be connected to airflow restrictions, sensor issues, or aging equipment in colder North MS snaps.</p>
+          </article>
+          <article class="surface problem">
+            <h3>Humidity and Comfort Swings</h3>
+            <p>Shoulder seasons can stress older systems. Duct leaks and poor maintenance can make rooms feel uneven.</p>
+          </article>
+        </div>
+      </div>
+      <aside>
+        <AdSlot placement="homepage_sidebar" />
+      </aside>
+    </div>
+  </section>
+
+  <SponsorPanel />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Latest Tips</h2>
+        <a class="button secondary" href="/blog/">View All Posts</a>
+      </div>
+      <div class="card-grid cols-3">
+        {posts.map((post) => <BlogCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container surface faq">
+      <h2>How Requests Work</h2>
+      <div class="card-grid cols-3">
+        <article>
+          <h3>1. Submit details</h3>
+          <p>Tell us your issue, phone, and service type.</p>
+        </article>
+        <article>
+          <h3>2. We route your lead</h3>
+          <p>Details are sent to local sponsoring providers serving Tupelo and nearby areas.</p>
+        </article>
+        <article>
+          <h3>3. Provider follow-up</h3>
+          <p>A provider may contact you directly based on service fit and availability.</p>
+        </article>
+      </div>
+      <p class="muted">No promise of response time or specific outcomes.</p>
+      <h3>Service Areas</h3>
+      <p>Tupelo, Saltillo, Verona, Mooreville, Belden, Guntown, Plantersville, and nearby North Mississippi communities.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-grid {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .hero-copy .sub {
+    font-size: 1.15rem;
+    max-width: 60ch;
+  }
+  .trust {
+    padding: var(--space-4);
+    display: grid;
+    gap: 0.4rem;
+  }
+  .trust p {
+    margin: 0;
+  }
+  .homepage-grid {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .problem {
+    padding: var(--space-4);
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+  .faq {
+    padding: var(--space-6);
+  }
+  @media (min-width: 1020px) {
+    .hero-grid {
+      grid-template-columns: 1.2fr 0.9fr;
+    }
+    .homepage-grid {
+      grid-template-columns: 1fr 320px;
+    }
+  }
+</style>

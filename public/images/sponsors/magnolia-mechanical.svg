@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120">
+  <rect width="320" height="120" rx="14" fill="#f0f5fb" />
+  <circle cx="56" cy="60" r="30" fill="#0c6bb0" />
+  <path d="M42 60h28M56 46v28" stroke="#fff" stroke-width="6" stroke-linecap="round" />
+  <text x="100" y="56" fill="#132238" font-size="24" font-family="Sora, Segoe UI, sans-serif" font-weight="700">Magnolia</text>
+  <text x="100" y="84" fill="#4f657d" font-size="20" font-family="Manrope, Segoe UI, sans-serif">Mechanical</text>
+</svg>

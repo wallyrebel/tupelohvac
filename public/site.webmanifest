@@ -1,0 +1,21 @@
+{
+  "name": "TupeloHVAC.com",
+  "short_name": "TupeloHVAC",
+  "description": "HVAC sales and service lead request site for Tupelo, Mississippi.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0c6bb0",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    }
+  ]
+}

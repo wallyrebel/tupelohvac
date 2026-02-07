@@ -1,0 +1,84 @@
+{
+  "categories": [
+    {
+      "category": "maintenance",
+      "season_tags": ["spring", "summer", "fall", "all-season"],
+      "primary_keywords": ["AC service Tupelo", "Tupelo HVAC"],
+      "prompt_seeds": [
+        "filter replacement timing for humid weather",
+        "how to prep HVAC before summer spikes",
+        "spring tune-up checklist for homeowners"
+      ]
+    },
+    {
+      "category": "troubleshooting",
+      "season_tags": ["summer", "winter", "all-season"],
+      "primary_keywords": ["fix HVAC Tupelo", "fix air conditioner Tupelo"],
+      "prompt_seeds": [
+        "AC running but house still warm",
+        "what weak airflow means in older homes",
+        "steps before calling for a no-cool issue"
+      ]
+    },
+    {
+      "category": "efficiency",
+      "season_tags": ["summer", "winter", "all-season"],
+      "primary_keywords": ["Tupelo HVAC", "AC service Tupelo"],
+      "prompt_seeds": [
+        "thermostat settings for comfort and runtime control",
+        "duct and airflow habits that improve comfort",
+        "humidity control basics for North Mississippi homes"
+      ]
+    },
+    {
+      "category": "seasonal",
+      "season_tags": ["spring", "summer", "fall", "winter"],
+      "primary_keywords": ["Tupelo HVAC", "fix heat Tupelo", "fix air conditioner Tupelo"],
+      "prompt_seeds": [
+        "pre-storm HVAC prep checklist",
+        "first cold snap heating readiness steps",
+        "late spring AC startup routine"
+      ]
+    },
+    {
+      "category": "iaq",
+      "season_tags": ["all-season"],
+      "primary_keywords": ["Tupelo HVAC"],
+      "prompt_seeds": [
+        "indoor air quality basics for families",
+        "return grille cleanliness and airflow",
+        "humidity and ventilation warning signs"
+      ]
+    },
+    {
+      "category": "thermostat",
+      "season_tags": ["summer", "winter", "all-season"],
+      "primary_keywords": ["fix HVAC Tupelo"],
+      "prompt_seeds": [
+        "common thermostat setup mistakes",
+        "programmable schedule basics for local weather",
+        "when thermostat readings do not match room comfort"
+      ]
+    },
+    {
+      "category": "warning-signs",
+      "season_tags": ["summer", "winter"],
+      "primary_keywords": ["fix heat Tupelo", "fix air conditioner Tupelo"],
+      "prompt_seeds": [
+        "burning smells and what they might mean",
+        "short cycling before major weather swings",
+        "noises that should trigger a service request"
+      ]
+    },
+    {
+      "category": "storm-prep",
+      "season_tags": ["spring", "summer", "fall"],
+      "primary_keywords": ["Tupelo HVAC", "fix HVAC Tupelo"],
+      "prompt_seeds": [
+        "storm season HVAC prep in North MS",
+        "post-storm checks for outdoor condenser units",
+        "power outage recovery tips for HVAC systems"
+      ]
+    }
+  ]
+}

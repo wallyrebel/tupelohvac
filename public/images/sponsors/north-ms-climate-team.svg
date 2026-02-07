@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120">
+  <rect width="320" height="120" rx="14" fill="#fff4ea" />
+  <rect x="26" y="26" width="68" height="68" rx="16" fill="#ff7a18" />
+  <path d="M40 72c8 0 8-10 16-10s8 10 16 10 8-10 16-10" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" />
+  <text x="112" y="53" fill="#132238" font-size="22" font-family="Sora, Segoe UI, sans-serif" font-weight="700">North MS</text>
+  <text x="112" y="84" fill="#4f657d" font-size="20" font-family="Manrope, Segoe UI, sans-serif">Climate Team</text>
+</svg>

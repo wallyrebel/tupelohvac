@@ -1,0 +1,36 @@
+---
+import LeadForm from "./LeadForm.astro";
+---
+
+<section id="request-service" class="section">
+  <div class="container contact-grid">
+    <div>
+      <p class="eyebrow">Request Service</p>
+      <h2>Tell us what is happening with your HVAC system.</h2>
+      <p class="muted">
+        This is a lead request form for local HVAC sales and service providers in Tupelo, MS.
+        Do not submit sensitive medical, legal, or financial information.
+      </p>
+      <ul>
+        <li>Local service request intake</li>
+        <li>No guaranteed response-time claims</li>
+        <li>Privacy-focused lead handling</li>
+      </ul>
+    </div>
+    <LeadForm />
+  </div>
+</section>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

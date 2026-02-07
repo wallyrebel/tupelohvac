@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import ContactSection from "../components/ContactSection.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE, KEYWORDS } from "../consts";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  type?: "website" | "article";
+  keywords?: string[];
+  showContactSection?: boolean;
+  structuredData?: Record<string, unknown> | null;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  canonical = SITE.url,
+  image = `${SITE.url}/brand/logo.svg`,
+  type = "website",
+  keywords = KEYWORDS,
+  showContactSection = true,
+  structuredData = null
+} = Astro.props;
+
+const [settingsEntry] = await getCollection("settings");
+const settings = settingsEntry?.data ?? {
+  footer_text: "TupeloHVAC.com connects local service requests with sponsoring HVAC service professionals.",
+  service_areas: ["Tupelo, MS", "Saltillo, MS", "Verona, MS", "Mooreville, MS", "Belden, MS", "Guntown, MS"],
+  header_cta_label: "Request Service",
+  footer_cta_label: "Request Service"
+};
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "TupeloHVAC.com",
+  url: SITE.url,
+  areaServed: settings.service_areas,
+  description:
+    "Lead request site for HVAC sales, repair, installation, and maintenance service in Tupelo, Mississippi and nearby North Mississippi areas.",
+  serviceType: ["AC repair", "Heating repair", "HVAC installation", "HVAC maintenance"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    email: "myersgrouponline@gmail.com"
+  }
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} canonical={canonical} image={image} type={type} keywords={keywords} />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)}></script>
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>}
+  </head>
+  <body>
+    <Header ctaLabel={settings.header_cta_label} />
+    <main>
+      <slot />
+      {showContactSection && <ContactSection />}
+    </main>
+    <Footer footerText={settings.footer_text} footerCtaLabel={settings.footer_cta_label} serviceAreas={settings.service_areas} />
+  </body>
+</html>

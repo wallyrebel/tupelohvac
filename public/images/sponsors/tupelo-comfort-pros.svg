@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120">
+  <rect width="320" height="120" rx="14" fill="#eaf7f2" />
+  <path d="M50 28l24 14v28L50 84 26 70V42z" fill="#16795f" />
+  <circle cx="50" cy="56" r="8" fill="#fff" />
+  <text x="98" y="53" fill="#132238" font-size="22" font-family="Sora, Segoe UI, sans-serif" font-weight="700">Tupelo</text>
+  <text x="98" y="84" fill="#4f657d" font-size="20" font-family="Manrope, Segoe UI, sans-serif">Comfort Pros</text>
+</svg>

@@ -1,0 +1,175 @@
+---
+interface Props {
+  formLabel?: string;
+}
+
+const { formLabel = "Enter your info here for HVAC sales and service in Tupelo" } = Astro.props;
+const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY || import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
+---
+
+<form class="lead-form surface" method="post" action="/api/lead" novalidate>
+  <h3>{formLabel}</h3>
+  <p class="muted">Local service request for Tupelo and nearby North Mississippi areas.</p>
+
+  <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
+  <input type="hidden" name="page_url" value="" />
+  <input type="hidden" name="utm_source" value="" />
+  <input type="hidden" name="utm_medium" value="" />
+  <input type="hidden" name="utm_campaign" value="" />
+  <input type="hidden" name="utm_term" value="" />
+  <input type="hidden" name="utm_content" value="" />
+  <input type="hidden" name="form_started_at" value="" />
+
+  <label>
+    Full Name
+    <input name="full_name" autocomplete="name" required />
+  </label>
+
+  <label>
+    Phone
+    <input name="phone" type="tel" autocomplete="tel" required />
+  </label>
+
+  <label>
+    Email
+    <input name="email" type="email" autocomplete="email" required />
+  </label>
+
+  <label>
+    ZIP (optional)
+    <input name="zip" inputmode="numeric" pattern="[0-9]*" />
+  </label>
+
+  <label>
+    Service Type
+    <select name="service_type">
+      <option value="AC not cooling">AC not cooling</option>
+      <option value="Heat not working">Heat not working</option>
+      <option value="New installation">New installation</option>
+      <option value="Maintenance tune-up">Maintenance tune-up</option>
+      <option value="Strange noise/odor">Strange noise/odor</option>
+      <option value="Other">Other</option>
+    </select>
+  </label>
+
+  <label>
+    Message
+    <textarea name="message" rows="5" required></textarea>
+  </label>
+
+  <label class="consent">
+    <input type="checkbox" name="consent" value="yes" required />
+    I agree to be contacted about my request.
+  </label>
+
+  {
+    turnstileSiteKey ? (
+      <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+    ) : (
+      <p class="muted">Turnstile site key not configured yet.</p>
+    )
+  }
+
+  <button type="submit" class="button primary">Request Service</button>
+  <p class="form-note muted">Your details are only used to respond to this request. See our <a href="/privacy-policy/">Privacy Policy</a>.</p>
+  <p class="status" aria-live="polite"></p>
+</form>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script is:inline>
+  (() => {
+    const forms = document.querySelectorAll(".lead-form");
+    if (!forms.length) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const assignTrackingValues = (form) => {
+      form.querySelector('input[name="form_started_at"]').value = String(Date.now());
+      form.querySelector('input[name="page_url"]').value = window.location.href;
+      form.querySelector('input[name="utm_source"]').value = params.get("utm_source") || "";
+      form.querySelector('input[name="utm_medium"]').value = params.get("utm_medium") || "";
+      form.querySelector('input[name="utm_campaign"]').value = params.get("utm_campaign") || "";
+      form.querySelector('input[name="utm_term"]').value = params.get("utm_term") || "";
+      form.querySelector('input[name="utm_content"]').value = params.get("utm_content") || "";
+    };
+
+    forms.forEach((form) => {
+      assignTrackingValues(form);
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const status = form.querySelector(".status");
+        const button = form.querySelector('button[type="submit"]');
+        button.setAttribute("disabled", "true");
+        status.textContent = "Sending...";
+        try {
+          const response = await fetch("/api/lead", {
+            method: "POST",
+            body: new FormData(form),
+            headers: { Accept: "application/json" }
+          });
+          const payload = await response.json();
+          if (!response.ok) throw new Error(payload.error || "Form submission failed.");
+          status.textContent = "Request received. A team member will contact you.";
+          form.reset();
+          assignTrackingValues(form);
+          if (window.turnstile) {
+            const widget = form.querySelector(".cf-turnstile");
+            if (widget) window.turnstile.reset(widget);
+          }
+        } catch (error) {
+          status.textContent = error.message || "Submission failed. Please try again.";
+        } finally {
+          button.removeAttribute("disabled");
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .lead-form {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+  .lead-form h3,
+  .lead-form p {
+    margin: 0;
+  }
+  label {
+    display: grid;
+    gap: 0.35rem;
+    font-weight: 600;
+  }
+  input,
+  textarea,
+  select {
+    padding: 0.65rem 0.7rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-line);
+    font: inherit;
+    color: inherit;
+    background: #fff;
+  }
+  textarea {
+    resize: vertical;
+  }
+  .consent {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+  .consent input {
+    margin-right: 0.45rem;
+  }
+  .hp {
+    position: absolute;
+    left: -10000px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .status {
+    min-height: 1.2rem;
+    font-weight: 600;
+    color: var(--color-success);
+  }
+</style>

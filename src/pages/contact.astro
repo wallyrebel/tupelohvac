@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+---
+
+<BaseLayout
+  title={`Contact | ${SITE.name}`}
+  description="Request HVAC sales and service support in Tupelo, Mississippi."
+  canonical={`${SITE.url}/contact/`}
+>
+  <section class="section">
+    <div class="container surface contact-page">
+      <p class="eyebrow">Contact</p>
+      <h1>Contact TupeloHVAC.com</h1>
+      <p>
+        Use the request form below to send your service details. If you need a quote for installation, include your
+        equipment type, home size estimate, and ZIP code.
+      </p>
+      <div class="cta-row">
+        <a href="/#request-service" class="button primary">Request Service</a>
+        <a href="/ac-repair-tupelo/" class="button secondary">Schedule Repair</a>
+      </div>
+      <p class="muted">
+        Lead intake email destination: <a href="mailto:myersgrouponline@gmail.com">myersgrouponline@gmail.com</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-page {
+    padding: var(--space-6);
+    max-width: 800px;
+  }
+  .cta-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+</style>

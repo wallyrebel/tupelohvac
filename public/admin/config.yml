@@ -1,0 +1,75 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USER/TupeloHVAC
+  branch: main
+
+site_url: https://tupelohvac.com
+display_url: https://tupelohvac.com
+logo_url: /brand/logo.svg
+
+media_folder: public/uploads
+public_folder: /uploads
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: blog
+    label: Blog Posts
+    folder: src/content/blog
+    extension: md
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - { label: Description, name: description, widget: string }
+      - { label: Keywords, name: keywords, widget: list }
+      - { label: Slug, name: slug, widget: string }
+      - { label: Featured Image, name: featured_image, widget: image, required: false }
+      - { label: Featured Image Alt, name: featured_image_alt, widget: string, required: false }
+      - { label: Pexels URL, name: pexels_url, widget: string, required: false }
+      - { label: Pexels Photographer, name: pexels_photographer, widget: string, required: false }
+      - { label: Pexels Photographer URL, name: pexels_photographer_url, widget: string, required: false }
+      - { label: Canonical, name: canonical, widget: string, required: false }
+      - { label: Category, name: category, widget: select, options: ["maintenance", "troubleshooting", "efficiency", "seasonal", "iaq", "thermostat", "warning-signs", "storm-prep"] }
+      - { label: Season Tag, name: season_tag, widget: select, options: ["winter", "spring", "summer", "fall", "all-season"] }
+      - { label: Primary Keyword, name: primary_keyword, widget: string }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: sponsors
+    label: Ads & Sponsors
+    folder: src/content/sponsors
+    extension: md
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Sponsor Name, name: sponsor_name, widget: string }
+      - { label: Featured on Homepage, name: featured_homepage, widget: boolean, default: false, required: false }
+      - { label: Logo/Image, name: image, widget: string }
+      - { label: Sponsor Blurb, name: blurb, widget: text, required: false }
+      - { label: Service Area, name: service_area, widget: string, required: false }
+      - { label: Link URL, name: link_url, widget: string }
+      - { label: CTA Label, name: cta_label, widget: string, default: "Visit Partner", required: false }
+      - label: Placements
+        name: placements
+        widget: select
+        multiple: true
+        options: ["header_banner", "homepage_sidebar", "blog_in_content", "footer_banner", "featured_partners"]
+      - { label: Start Date, name: start_date, widget: date }
+      - { label: End Date, name: end_date, widget: date, required: false }
+      - { label: Tracking Label, name: tracking_label, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown, required: false }
+
+  - name: settings
+    label: Site Settings
+    files:
+      - name: site
+        label: Global Settings
+        file: src/content/settings/site.md
+        fields:
+          - { label: Footer Text, name: footer_text, widget: text }
+          - label: Service Areas
+            name: service_areas
+            widget: list
+          - { label: Header CTA Label, name: header_cta_label, widget: string }
+          - { label: Footer CTA Label, name: footer_cta_label, widget: string }

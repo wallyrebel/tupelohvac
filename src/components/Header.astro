@@ -1,0 +1,78 @@
+---
+import AdSlot from "./AdSlot.astro";
+
+interface Props {
+  ctaLabel: string;
+}
+
+const { ctaLabel } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="top-ad container">
+    <AdSlot placement="header_banner" />
+  </div>
+  <div class="container nav-wrap">
+    <a href="/" class="brand" aria-label="TupeloHVAC home">
+      <img src="/brand/logo.svg" alt="TupeloHVAC.com logo" />
+    </a>
+    <nav aria-label="Primary">
+      <a href="/ac-repair-tupelo/">AC Repair</a>
+      <a href="/ac-service-tupelo/">AC Service</a>
+      <a href="/heat-repair-tupelo/">Heat Repair</a>
+      <a href="/hvac-installation-tupelo/">Installation</a>
+      <a href="/hvac-maintenance-tupelo/">Maintenance</a>
+      <a href="/blog/">Blog</a>
+      <a href="/tupelo-hvac-guide/">Ultimate Guide</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <a class="button primary" href="/#request-service">{ctaLabel}</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    background: rgba(244, 247, 251, 0.95);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .top-ad {
+    padding-top: var(--space-2);
+  }
+  .nav-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-4);
+    align-items: center;
+    padding-block: 0.55rem;
+  }
+  .brand img {
+    width: min(220px, 40vw);
+    display: block;
+  }
+  nav {
+    display: none;
+    gap: 0.85rem;
+    justify-content: center;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--color-ink);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  @media (min-width: 1100px) {
+    nav {
+      display: flex;
+    }
+  }
+  @media (max-width: 720px) {
+    .button {
+      font-size: 0.9rem;
+      padding: 0.6rem 0.9rem;
+    }
+  }
+</style>

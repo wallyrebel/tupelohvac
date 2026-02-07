@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import { hasPlacement, isActiveWindow } from "../lib/content";
+
+const sponsors = (await getCollection("sponsors"))
+  .filter(
+    ({ data }) =>
+      data.featured_homepage &&
+      hasPlacement(data, "featured_partners") &&
+      isActiveWindow(data.start_date, data.end_date)
+  )
+  .slice(0, 3);
+---
+
+<section class="section">
+  <div class="container">
+    <div class="surface sponsor-wrap">
+      <div class="sponsor-head">
+        <p class="eyebrow">Sponsored</p>
+        <h2>Top Local HVAC Companies</h2>
+        <p class="muted">Sponsored placements. Not an endorsement.</p>
+      </div>
+      <div class="card-grid cols-3">
+        {sponsors.map((sponsor) => (
+          <article class="sponsor-card">
+            <img src={sponsor.data.image} alt={`${sponsor.data.sponsor_name} logo`} loading="lazy" />
+            <h3>{sponsor.data.sponsor_name}</h3>
+            <p>{sponsor.data.blurb}</p>
+            <p class="muted"><strong>Service area:</strong> {sponsor.data.service_area}</p>
+            <a href={sponsor.data.link_url} rel="sponsored noopener noreferrer" target="_blank" class="button secondary">
+              {sponsor.data.cta_label}
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sponsor-wrap {
+    padding: var(--space-6);
+    display: grid;
+    gap: var(--space-5);
+  }
+  .sponsor-head p {
+    margin: 0.25rem 0;
+  }
+  .sponsor-card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    background: #fff;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .sponsor-card p {
+    margin: 0;
+  }
+  .sponsor-card img {
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-line);
+    background: #fff;
+  }
+</style>

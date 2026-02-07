@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+---
+
+<BaseLayout
+  title={`HVAC Maintenance Tupelo, MS | ${SITE.name}`}
+  description="HVAC maintenance in Tupelo, MS: seasonal checklist, warning signs, and practical upkeep steps."
+  canonical={`${SITE.url}/hvac-maintenance-tupelo/`}
+>
+  <section class="section">
+    <div class="container surface service">
+      <p class="eyebrow">HVAC Maintenance Tupelo</p>
+      <h1>HVAC Maintenance in Tupelo, MS</h1>
+      <p>
+        Preventive maintenance helps reduce emergency calls in summer and winter peaks. Tupelo weather puts extra
+        stress on both cooling and heating systems, so routine checks matter.
+      </p>
+      <h2>Core maintenance tasks</h2>
+      <ul>
+        <li>Change filters every 1-3 months based on dust and usage.</li>
+        <li>Clear debris around outdoor units.</li>
+        <li>Inspect vents and returns for airflow blockages.</li>
+        <li>Schedule spring cooling check and fall heating check.</li>
+      </ul>
+      <p>
+        If you hear new noises or smell burning/damp odors, request repair quickly through
+        <a href="/ac-repair-tupelo/"> AC repair</a> or <a href="/heat-repair-tupelo/">heat repair</a>.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/#request-service">Request Service</a>
+        <a class="button secondary" href="/contact/">Get a Quote</a>
+        <a class="button secondary" href="/tupelo-hvac-guide/">Read the Tupelo HVAC Guide</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service {
+    padding: var(--space-6);
+    max-width: 900px;
+  }
+  .cta-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+</style>

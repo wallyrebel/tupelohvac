@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "../../components/BlogCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE } from "../../consts";
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout
+  title={`Tupelo HVAC Blog | ${SITE.name}`}
+  description="Practical HVAC maintenance, troubleshooting, and seasonal tips for Tupelo, MS homeowners."
+  canonical={`${SITE.url}/blog/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Blog</p>
+      <h1>Tupelo HVAC Tips</h1>
+      <p class="muted">Helpful, plain-language guidance for maintenance, troubleshooting, efficiency, and weather prep in Tupelo, MS.</p>
+      <div class="card-grid cols-3">
+        {posts.map((post) => <BlogCard post={post} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

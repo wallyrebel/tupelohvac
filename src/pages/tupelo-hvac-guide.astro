@@ -1,0 +1,257 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How often should HVAC systems be serviced in Tupelo, MS?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A common approach is one cooling tune-up in spring and one heating tune-up in fall, with routine filter checks in between."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "What should I check before requesting HVAC repair?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Check thermostat mode and batteries, replace a dirty filter, verify breakers and disconnects, and confirm vents are open and unobstructed."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "When should I call a pro instead of troubleshooting?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Call a pro for electrical smells, repeated breaker trips, no heating or cooling after basic checks, loud grinding noises, or ice buildup that returns quickly."
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={`Tupelo HVAC Guide: AC Repair, Heating, Maintenance, and When to Call a Pro | ${SITE.name}`}
+  description="A practical Tupelo HVAC guide covering AC repair, heating problems, seasonal maintenance, efficiency tips, and signs it is time to call a pro."
+  canonical={`${SITE.url}/tupelo-hvac-guide/`}
+  structuredData={faqSchema}
+>
+  <section class="section">
+    <article class="container surface guide">
+      <p class="eyebrow">Cornerstone Guide</p>
+      <h1>Tupelo HVAC Guide: AC Repair, Heating, Maintenance, and When to Call a Pro</h1>
+      <p>
+        Tupelo homeowners deal with a wide range of weather stress on HVAC equipment. Summer heat and humidity can push
+        cooling systems for long hours, while winter cold snaps reveal weak heating components fast. Shoulder seasons
+        can be just as tricky because frequent temperature swings make systems cycle on and off more often than usual.
+        This guide gives you a practical local framework for handling common issues, planning maintenance, and deciding
+        when to request professional help.
+      </p>
+      <p>
+        If you need help right now, use the quick links below: <a href="/ac-repair-tupelo/">AC repair</a>,
+        <a href="/heat-repair-tupelo/"> heat repair</a>, <a href="/ac-service-tupelo/"> AC service</a>,
+        <a href="/hvac-installation-tupelo/"> HVAC installation</a>, and
+        <a href="/hvac-maintenance-tupelo/"> HVAC maintenance</a>.
+      </p>
+
+      <h2>How Tupelo and North MS Weather Affects HVAC Performance</h2>
+      <p>
+        In Tupelo, long humid cooling seasons can increase runtime and moisture load. That means the system has to do
+        two jobs at once: lower air temperature and remove humidity. If airflow is restricted by a dirty filter or a
+        blocked coil, comfort usually drops quickly. You may feel sticky indoors, see higher runtime, or notice uneven
+        cooling between rooms.
+      </p>
+      <p>
+        Winter is usually shorter than summer, but abrupt cold periods still matter. Older furnaces or heat pumps can
+        struggle during overnight temperature drops. If your home heats slowly, short-cycles, or has cold zones, small
+        problems can grow if they are ignored through the season.
+      </p>
+
+      <h2>Common AC Problems in Tupelo Homes</h2>
+      <p>These are common cooling complaints and what they may indicate:</p>
+      <ul>
+        <li><strong>AC blows warm air:</strong> thermostat settings, airflow issues, refrigerant problems, or compressor faults.</li>
+        <li><strong>Weak airflow:</strong> dirty filter, duct restrictions, blower wear, or frozen evaporator coil.</li>
+        <li><strong>Frequent cycling:</strong> oversized equipment, thermostat location issues, or electrical control problems.</li>
+        <li><strong>Water around indoor unit:</strong> condensate drain clog or pan drainage issue.</li>
+        <li><strong>Unusual odor/noise:</strong> belt wear, fan imbalance, electrical concerns, or microbial growth.</li>
+      </ul>
+      <p>
+        For practical next steps, start with <a href="/ac-repair-tupelo/">AC repair Tupelo</a>. If the unit still cools but
+        performance is dropping, schedule <a href="/ac-service-tupelo/">AC service</a> before peak demand weeks.
+      </p>
+
+      <h2>Common Heating Problems and Cold-Weather Warning Signs</h2>
+      <p>Heating calls in North Mississippi often begin with these symptoms:</p>
+      <ul>
+        <li>The system turns on, but rooms stay cold.</li>
+        <li>Short bursts of heat followed by shutdown.</li>
+        <li>Burning, dusty, or metallic smells that linger.</li>
+        <li>Rattling, popping, or grinding noises.</li>
+        <li>Large temperature swings between rooms.</li>
+      </ul>
+      <p>
+        A dirty filter, airflow imbalance, or thermostat setup can contribute, but repeated issues need diagnosis.
+        Heating systems involve combustion or high-voltage components, so persistent faults should be checked by a
+        qualified technician. Learn more at <a href="/heat-repair-tupelo/">heat repair Tupelo</a>.
+      </p>
+
+      <h2>Maintenance Schedule for Tupelo HVAC Systems</h2>
+      <p>
+        The best maintenance plan is simple and consistent. You do not need complicated routines; you need repeatable
+        checks that match local weather patterns.
+      </p>
+
+      <h3>Monthly</h3>
+      <ul>
+        <li>Inspect filter condition and replace if dirty.</li>
+        <li>Check vents and returns for obstructions.</li>
+        <li>Listen for new sounds when the system starts and stops.</li>
+      </ul>
+
+      <h3>Spring (before heavy AC use)</h3>
+      <ul>
+        <li>Schedule cooling tune-up and airflow check.</li>
+        <li>Clear leaves/pollen around outdoor equipment.</li>
+        <li>Check thermostat programming for summer schedules.</li>
+      </ul>
+
+      <h3>Fall (before heating season)</h3>
+      <ul>
+        <li>Schedule heating inspection and safety checks.</li>
+        <li>Test heat mode before the first major cold front.</li>
+        <li>Seal obvious draft points to reduce heating load.</li>
+      </ul>
+
+      <h3>Every season change</h3>
+      <ul>
+        <li>Review energy usage patterns for unusual spikes.</li>
+        <li>Look for condensation issues around vents/air handler.</li>
+        <li>Re-evaluate comfort zones in bedrooms and high-use rooms.</li>
+      </ul>
+
+      <p>
+        If you want a proactive plan, see <a href="/hvac-maintenance-tupelo/">HVAC maintenance Tupelo</a> and request
+        seasonal reminders through the contact form.
+      </p>
+
+      <h2>What to Check Before Calling a Pro</h2>
+      <p>
+        A short pre-check can save time and help you describe the issue clearly. These steps are safe for homeowners
+        and tenants:
+      </p>
+      <ol>
+        <li>Confirm thermostat mode, setpoint, and batteries.</li>
+        <li>Replace filter if loaded with dust.</li>
+        <li>Verify breakers and disconnects are on.</li>
+        <li>Make sure indoor/outdoor units have clear airflow.</li>
+        <li>Document symptoms: sound, smell, timing, and affected rooms.</li>
+      </ol>
+      <p>
+        If these checks do not restore normal operation, request service. Include when the issue started and whether it
+        worsens in afternoon heat, overnight cold, or rainy weather.
+      </p>
+
+      <h2>When to Call a Professional Immediately</h2>
+      <p>Do not delay service when you notice high-risk signs:</p>
+      <ul>
+        <li>Electrical burning smell or repeated breaker trips.</li>
+        <li>Grinding, screeching, or loud metal-on-metal sounds.</li>
+        <li>Ice that returns quickly after thawing and filter change.</li>
+        <li>No heating during cold conditions or no cooling in extreme heat.</li>
+        <li>Visible water leaks near electrical components.</li>
+      </ul>
+      <p>
+        These are not always catastrophic failures, but they should be handled quickly and safely by trained technicians.
+      </p>
+
+      <h2>Efficiency Tips for Comfort and Lower Runtime</h2>
+      <p>
+        Efficiency is less about one single upgrade and more about consistent habits plus periodic tune-ups. Try this
+        approach:
+      </p>
+      <ul>
+        <li>Use a clean filter schedule and keep return grilles clear.</li>
+        <li>Set realistic thermostat temperatures instead of extreme swings.</li>
+        <li>Use ceiling fans to improve perceived comfort during summer.</li>
+        <li>Seal obvious duct leaks and insulation gaps where practical.</li>
+        <li>Schedule tune-ups before peak summer and winter demand.</li>
+      </ul>
+      <p>
+        If your system still struggles after tune-ups, a replacement evaluation may be worth discussing:
+        <a href="/hvac-installation-tupelo/">HVAC installation Tupelo</a>.
+      </p>
+
+      <h2>How to Decide Between Repair and Replacement</h2>
+      <p>
+        There is no universal rule, but you can use a practical decision frame:
+      </p>
+      <ul>
+        <li>How often has the system needed repairs in the last two years?</li>
+        <li>Are comfort complaints increasing despite maintenance?</li>
+        <li>Is humidity control or airflow still poor after repairs?</li>
+        <li>Does your current setup fit your home's size and layout?</li>
+      </ul>
+      <p>
+        If repair history is growing and comfort keeps dropping, request a quote for replacement options and compare
+        them with expected repair needs.
+      </p>
+
+      <h2>Short FAQ</h2>
+      <h3>How often should I replace filters in Tupelo?</h3>
+      <p>
+        Many homes do well with a 1-3 month cycle, but pets, construction dust, and high runtime can require more
+        frequent changes.
+      </p>
+
+      <h3>Can I run my AC if airflow is weak?</h3>
+      <p>
+        Running with severe airflow restriction can increase stress on components. Replace the filter and inspect vents;
+        if weakness continues, request service.
+      </p>
+
+      <h3>What details help speed up a service request?</h3>
+      <p>
+        Include system type, symptom timeline, thermostat settings, and whether specific rooms are worse than others.
+      </p>
+
+      <div class="cta-box">
+        <h2>Need Help Now?</h2>
+        <p>Request local HVAC support in Tupelo, MS.</p>
+        <div class="cta-row">
+          <a class="button primary" href="/#request-service">Request Service</a>
+          <a class="button secondary" href="/contact/">Get a Quote</a>
+          <a class="button secondary" href="/ac-repair-tupelo/">Schedule Repair</a>
+        </div>
+      </div>
+
+      <p>
+        Keep this page bookmarked as your local reference. For regular updates and seasonal reminders, check the
+        <a href="/blog/">Tupelo HVAC blog</a>.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .guide {
+    padding: var(--space-6);
+    max-width: 900px;
+  }
+  .cta-box {
+    margin: var(--space-6) 0;
+    padding: var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: #fff;
+  }
+  .cta-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+</style>

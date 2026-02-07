@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+---
+
+<BaseLayout
+  title={`HVAC Installation Tupelo, MS | ${SITE.name}`}
+  description="HVAC installation guidance for Tupelo, MS homes: sizing considerations, replacement timing, and quote request steps."
+  canonical={`${SITE.url}/hvac-installation-tupelo/`}
+>
+  <section class="section">
+    <div class="container surface service">
+      <p class="eyebrow">HVAC Installation Tupelo</p>
+      <h1>HVAC Installation and Replacement in Tupelo, MS</h1>
+      <p>
+        If your current system is older, inconsistent, or costly to maintain, new HVAC installation may be the right
+        next step. In Tupelo, sizing for humidity, insulation conditions, and duct performance is just as important as
+        choosing equipment brand.
+      </p>
+      <h2>What affects replacement decisions</h2>
+      <ul>
+        <li>Frequent repairs across recent seasons.</li>
+        <li>Uneven temperatures and comfort complaints.</li>
+        <li>Noise, poor airflow, and humidity control issues.</li>
+        <li>System age and efficiency target for the home.</li>
+      </ul>
+      <p>
+        Request a quote with home details and ZIP code. If you only need tune-ups, see
+        <a href="/hvac-maintenance-tupelo/"> HVAC maintenance</a>.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/#request-service">Request Service</a>
+        <a class="button secondary" href="/contact/">Get a Quote</a>
+        <a class="button secondary" href="/tupelo-hvac-guide/">Read the Tupelo HVAC Guide</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service {
+    padding: var(--space-6);
+    max-width: 900px;
+  }
+  .cta-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+</style>

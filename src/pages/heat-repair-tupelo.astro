@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+---
+
+<BaseLayout
+  title={`Heat Repair Tupelo, MS | ${SITE.name}`}
+  description="Need to fix heat in Tupelo? Review common no-heat symptoms, safe checks, and when to request heating repair."
+  canonical={`${SITE.url}/heat-repair-tupelo/`}
+>
+  <section class="section">
+    <div class="container surface service">
+      <p class="eyebrow">Heat Repair Tupelo</p>
+      <h1>Fix Heat Problems in Tupelo, MS</h1>
+      <p>
+        If your heating system runs without warming the home, cycles too often, or gives off unusual odors, request a
+        heating diagnostic. North Mississippi cold snaps can expose weak igniters, airflow restrictions, and thermostat
+        control issues.
+      </p>
+      <h2>Before calling a pro</h2>
+      <ul>
+        <li>Set thermostat to heat mode and raise setpoint.</li>
+        <li>Check and replace the air filter if dirty.</li>
+        <li>Confirm power switches and breakers are on.</li>
+        <li>Make sure supply registers are open.</li>
+      </ul>
+      <p>
+        If your home still feels cold, request local heat repair. Also review
+        <a href="/hvac-maintenance-tupelo/"> maintenance plans</a> to help prevent mid-season issues.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/#request-service">Request Service</a>
+        <a class="button secondary" href="/contact/">Get a Quote</a>
+        <a class="button secondary" href="/tupelo-hvac-guide/">Read the Tupelo HVAC Guide</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service {
+    padding: var(--space-6);
+    max-width: 900px;
+  }
+  .cta-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+</style>

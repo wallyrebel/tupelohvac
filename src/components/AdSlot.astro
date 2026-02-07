@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import { hasPlacement, isActiveWindow } from "../lib/content";
+
+interface Props {
+  placement: "header_banner" | "homepage_sidebar" | "blog_in_content" | "footer_banner";
+  limit?: number;
+}
+
+const { placement, limit = 1 } = Astro.props;
+const allSponsors = await getCollection("sponsors");
+const activeAds = allSponsors
+  .filter(({ data }) => hasPlacement(data, placement) && isActiveWindow(data.start_date, data.end_date))
+  .slice(0, limit);
+---
+
+{
+  activeAds.length > 0 && (
+    <aside class={`ad-slot ad-${placement}`} aria-label={`Sponsored ad slot ${placement}`}>
+      <p class="ad-label">Sponsored</p>
+      {activeAds.map((entry) => (
+        <a
+          href={`${entry.data.link_url}${entry.data.tracking_label ? `?ref=${encodeURIComponent(entry.data.tracking_label)}` : ""}`}
+          class="ad-item surface"
+          rel="sponsored noopener noreferrer"
+          target="_blank"
+        >
+          <img src={entry.data.image} alt={`${entry.data.sponsor_name} ad`} loading="lazy" />
+          <strong>{entry.data.sponsor_name}</strong>
+        </a>
+      ))}
+    </aside>
+  )
+}
+
+<style>
+  .ad-slot {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .ad-label {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+  }
+  .ad-item {
+    display: grid;
+    gap: 0.45rem;
+    padding: var(--space-3);
+    color: inherit;
+    text-decoration: none;
+  }
+  .ad-item strong {
+    font-size: 0.95rem;
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+---
+
+<BaseLayout
+  title={`AC Service Tupelo, MS | ${SITE.name}`}
+  description="AC service in Tupelo, MS for cooling performance, humidity control, and seasonal system checks."
+  canonical={`${SITE.url}/ac-service-tupelo/`}
+>
+  <section class="section">
+    <div class="container surface service">
+      <p class="eyebrow">AC Service Tupelo</p>
+      <h1>AC Service in Tupelo for Reliable Summer Cooling</h1>
+      <p>
+        Regular AC service helps reduce breakdown risk during Tupelo heat waves. Service typically includes airflow
+        checks, coil cleaning, electrical inspection, condensate line review, and thermostat verification.
+      </p>
+      <h2>Why annual service matters</h2>
+      <ul>
+        <li>Supports steady cooling during high-humidity days.</li>
+        <li>Can improve efficiency and reduce unnecessary runtime.</li>
+        <li>Helps identify wear signs before a full failure.</li>
+      </ul>
+      <p>
+        If your system already has issues, visit <a href="/ac-repair-tupelo/">AC repair Tupelo</a>. For heating
+        concerns, go to <a href="/heat-repair-tupelo/">heat repair Tupelo</a>.
+      </p>
+      <div class="cta-row">
+        <a class="button primary" href="/#request-service">Request Service</a>
+        <a class="button secondary" href="/contact/">Get a Quote</a>
+        <a class="button secondary" href="/tupelo-hvac-guide/">Read the Tupelo HVAC Guide</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service {
+    padding: var(--space-6);
+    max-width: 900px;
+  }
+  .cta-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+</style>
