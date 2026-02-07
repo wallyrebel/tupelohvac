@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: YOUR_GITHUB_USER/TupeloHVAC
+  repo: wallyrebel/tupelohvac
   branch: main
 
 site_url: https://tupelohvac.com
