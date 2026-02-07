@@ -27,6 +27,10 @@ type LeadPayload = {
 };
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+type TurnstileVerifyResult = {
+  success: boolean;
+  errorCodes: string[];
+};
 
 function clean(value: FormDataEntryValue | null) {
   return String(value ?? "").trim();
@@ -39,19 +43,35 @@ function jsonResponse(payload: unknown, status = 200) {
   });
 }
 
-async function verifyTurnstile(token: string, ip: string, secret: string) {
-  const body = new URLSearchParams({
-    secret,
-    response: token,
-    remoteip: ip
-  });
+async function verifyTurnstileOnce(token: string, secret: string, ip?: string): Promise<TurnstileVerifyResult> {
+  const body = new URLSearchParams({ secret, response: token });
+  if (ip) body.set("remoteip", ip);
   const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",
     body
   });
-  if (!response.ok) return false;
-  const data = (await response.json()) as { success?: boolean };
-  return Boolean(data.success);
+  if (!response.ok) {
+    return { success: false, errorCodes: ["siteverify-http-error"] };
+  }
+  const data = (await response.json()) as { success?: boolean; "error-codes"?: string[] };
+  return {
+    success: Boolean(data.success),
+    errorCodes: Array.isArray(data["error-codes"]) ? data["error-codes"] : []
+  };
+}
+
+async function verifyTurnstile(token: string, ip: string, secret: string): Promise<TurnstileVerifyResult> {
+  const firstAttempt = await verifyTurnstileOnce(token, secret, ip || undefined);
+  if (firstAttempt.success || !ip) return firstAttempt;
+
+  // Fallback for edge cases where remote IP context is unstable (mobile relay/proxy hops).
+  const secondAttempt = await verifyTurnstileOnce(token, secret);
+  if (secondAttempt.success) return secondAttempt;
+
+  return {
+    success: false,
+    errorCodes: [...firstAttempt.errorCodes, ...secondAttempt.errorCodes]
+  };
 }
 
 async function sendLeadEmail(lead: LeadPayload, env: Env) {
@@ -166,9 +186,15 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
     const ip = request.headers.get("CF-Connecting-IP") || "";
     const user_agent = request.headers.get("User-Agent") || "";
-    const human = await verifyTurnstile(token, ip, env.TURNSTILE_SECRET_KEY);
-    if (!human) {
-      return jsonResponse({ error: "Turnstile validation failed." }, 400);
+    const turnstileResult = await verifyTurnstile(token, ip, env.TURNSTILE_SECRET_KEY);
+    if (!turnstileResult.success) {
+      return jsonResponse(
+        {
+          error: "Turnstile validation failed. Please retry the verification challenge.",
+          turnstile_codes: turnstileResult.errorCodes.slice(0, 4)
+        },
+        400
+      );
     }
 
     const lead: LeadPayload = {

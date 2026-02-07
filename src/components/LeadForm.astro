@@ -99,6 +99,7 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY || import.meta.env.P
         event.preventDefault();
         const status = form.querySelector(".status");
         const button = form.querySelector('button[type="submit"]');
+        const widget = form.querySelector(".cf-turnstile");
         button.setAttribute("disabled", "true");
         status.textContent = "Sending...";
         try {
@@ -113,11 +114,15 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY || import.meta.env.P
           form.reset();
           assignTrackingValues(form);
           if (window.turnstile) {
-            const widget = form.querySelector(".cf-turnstile");
             if (widget) window.turnstile.reset(widget);
           }
         } catch (error) {
-          status.textContent = error.message || "Submission failed. Please try again.";
+          const message = error.message || "Submission failed. Please try again.";
+          status.textContent = message;
+          if (window.turnstile && widget) {
+            window.turnstile.reset(widget);
+          }
+          assignTrackingValues(form);
         } finally {
           button.removeAttribute("disabled");
         }
