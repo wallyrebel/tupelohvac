@@ -3,7 +3,7 @@ interface Env {
   RESEND_API_KEY: string;
   LEAD_TO_EMAIL?: string;
   LEAD_FROM_EMAIL?: string;
-  GOOGLE_SHEETS_WEBHOOK_URL: string;
+  GOOGLE_SHEETS_WEBHOOK_URL?: string;
   GOOGLE_SHEETS_WEBHOOK_SECRET?: string;
 }
 
@@ -99,6 +99,7 @@ async function sendLeadEmail(lead: LeadPayload, env: Env) {
 }
 
 async function appendToGoogleSheets(lead: LeadPayload, env: Env) {
+  if (!env.GOOGLE_SHEETS_WEBHOOK_URL) return;
   const response = await fetch(env.GOOGLE_SHEETS_WEBHOOK_URL, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -115,7 +116,7 @@ async function appendToGoogleSheets(lead: LeadPayload, env: Env) {
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   try {
-    if (!env.TURNSTILE_SECRET_KEY || !env.RESEND_API_KEY || !env.GOOGLE_SHEETS_WEBHOOK_URL) {
+    if (!env.TURNSTILE_SECRET_KEY || !env.RESEND_API_KEY) {
       return jsonResponse({ error: "Server is missing required environment variables." }, 500);
     }
 
@@ -190,7 +191,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     };
 
     await sendLeadEmail(lead, env);
-    await appendToGoogleSheets(lead, env);
+    if (env.GOOGLE_SHEETS_WEBHOOK_URL) {
+      await appendToGoogleSheets(lead, env);
+    }
     return jsonResponse({ ok: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown submission error.";
