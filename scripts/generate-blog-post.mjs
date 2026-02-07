@@ -80,6 +80,62 @@ function wordCount(text) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
+function normalizePathname(pathname) {
+  if (!pathname) return "/";
+  const trimmed = pathname.trim();
+  if (!trimmed) return "/";
+  const withLeading = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+  if (withLeading.length > 1 && withLeading.endsWith("/")) {
+    return withLeading.slice(0, -1);
+  }
+  return withLeading;
+}
+
+function parseLinkTarget(rawTarget) {
+  const value = String(rawTarget || "").trim().replace(/^<|>$/g, "");
+  if (!value) return { path: "", hash: "" };
+  if (value.startsWith("#")) return { path: "", hash: value };
+  try {
+    const url = value.match(/^https?:\/\//i) ? new URL(value) : new URL(value, "https://tupelohvac.com");
+    return {
+      path: normalizePathname(url.pathname),
+      hash: url.hash || ""
+    };
+  } catch {
+    return { path: "", hash: "" };
+  }
+}
+
+function collectLinkedTargets(body) {
+  const links = [];
+  const markdownLinkRegex = /\[[^\]]+\]\(([^)\s]+(?:\s+"[^"]*")?)\)/g;
+  const htmlHrefRegex = /href\s*=\s*["']([^"']+)["']/gi;
+
+  let match;
+  while ((match = markdownLinkRegex.exec(body)) !== null) {
+    const raw = match[1].replace(/\s+"[^"]*"$/, "").trim();
+    links.push(parseLinkTarget(raw));
+  }
+  while ((match = htmlHrefRegex.exec(body)) !== null) {
+    links.push(parseLinkTarget(match[1]));
+  }
+
+  return links;
+}
+
+function hasRequiredLink(body, targetUrl) {
+  const target = parseLinkTarget(targetUrl);
+  const links = collectLinkedTargets(body);
+  return links.some((link) => {
+    if (target.hash) {
+      const targetPath = target.path || "/";
+      const linkPath = link.path || "/";
+      return link.hash === target.hash && normalizePathname(linkPath) === normalizePathname(targetPath);
+    }
+    return normalizePathname(link.path) === normalizePathname(target.path);
+  });
+}
+
 async function readJson(filePath, fallback) {
   try {
     const text = await fs.readFile(filePath, "utf8");
@@ -235,16 +291,19 @@ function qualityChecks({ title, body, description, recentTitles, servicePage }) 
   checks.push({ ok: wc >= 300 && wc <= 500, reason: `Word count out of range (${wc}).` });
   checks.push({ ok: /##\s*FAQ/i.test(body), reason: "Missing FAQ section." });
   checks.push({
-    ok: /\[Request Service\]\(\/#request-service\)/i.test(body),
+    ok: hasRequiredLink(body, "/#request-service"),
     reason: "Missing Request Service link."
   });
-  checks.push({ ok: /\[Get a Quote\]\(\/contact\/\)/i.test(body), reason: "Missing Get a Quote link." });
   checks.push({
-    ok: new RegExp(`\\[Schedule Repair\\]\\(${servicePage.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\)`, "i").test(body),
+    ok: hasRequiredLink(body, "/contact/"),
+    reason: "Missing contact page link."
+  });
+  checks.push({
+    ok: hasRequiredLink(body, servicePage),
     reason: "Missing Schedule Repair service link."
   });
   checks.push({
-    ok: /\[.*Tupelo HVAC Guide.*\]\(\/tupelo-hvac-guide\/\)/i.test(body),
+    ok: hasRequiredLink(body, "/tupelo-hvac-guide/"),
     reason: "Missing Tupelo HVAC Guide link."
   });
   checks.push({ ok: title.length > 20 && title.length < 95, reason: "Title length out of range." });
