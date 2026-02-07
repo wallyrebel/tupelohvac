@@ -32,15 +32,13 @@ const { ctaLabel } = Astro.props;
 
 <style>
   .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(8px);
-    background: rgba(244, 247, 251, 0.95);
+    position: static;
+    background: rgba(244, 247, 251, 0.98);
     border-bottom: 1px solid var(--color-line);
   }
   .top-ad {
-    padding-top: var(--space-2);
+    padding-top: var(--space-1);
+    padding-bottom: var(--space-1);
   }
   .nav-wrap {
     display: grid;
