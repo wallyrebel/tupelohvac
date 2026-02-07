@@ -1,3 +1,6 @@
 name = "tupelohvac"
 compatibility_date = "2025-01-15"
 pages_build_output_dir = "./dist"
+
+[vars]
+PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAACY-9v5oznahYcoZ"
