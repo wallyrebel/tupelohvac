@@ -16,7 +16,18 @@ const { ctaLabel } = Astro.props;
     <a href="/" class="brand" aria-label="TupeloHVAC home">
       <img src="/brand/logo.svg" alt="TupeloHVAC.com logo" />
     </a>
-    <nav aria-label="Primary">
+    <div class="header-controls">
+      <button
+        class="mobile-menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+      >
+        Menu
+      </button>
+      <a class="button primary" href="/#request-service">{ctaLabel}</a>
+    </div>
+    <nav id="primary-nav" aria-label="Primary">
       <a href="/ac-repair-tupelo/">AC Repair</a>
       <a href="/ac-service-tupelo/">AC Service</a>
       <a href="/heat-repair-tupelo/">Heat Repair</a>
@@ -26,9 +37,41 @@ const { ctaLabel } = Astro.props;
       <a href="/tupelo-hvac-guide/">Ultimate Guide</a>
       <a href="/contact/">Contact</a>
     </nav>
-    <a class="button primary" href="/#request-service">{ctaLabel}</a>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+    const toggle = header.querySelector(".mobile-menu-toggle");
+    const nav = header.querySelector("#primary-nav");
+    if (!toggle || !nav) return;
+
+    const closeMenu = () => {
+      header.setAttribute("data-mobile-nav", "closed");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = header.getAttribute("data-mobile-nav") === "open";
+      if (isOpen) {
+        closeMenu();
+      } else {
+        header.setAttribute("data-mobile-nav", "open");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 1100) closeMenu();
+    });
+  })();
+</script>
 
 <style>
   .site-header {
@@ -42,8 +85,8 @@ const { ctaLabel } = Astro.props;
   }
   .nav-wrap {
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: var(--space-4);
+    grid-template-columns: 1fr auto;
+    gap: var(--space-3);
     align-items: center;
     padding-block: 0.55rem;
   }
@@ -51,26 +94,75 @@ const { ctaLabel } = Astro.props;
     width: min(220px, 40vw);
     display: block;
   }
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .mobile-menu-toggle {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-weight: 700;
+    padding: 0.58rem 0.9rem;
+    cursor: pointer;
+  }
   nav {
     display: none;
-    gap: 0.85rem;
-    justify-content: center;
+    grid-column: 1 / -1;
+    margin-top: var(--space-2);
+    padding: var(--space-3);
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    gap: 0.25rem;
+  }
+  .site-header[data-mobile-nav="open"] nav {
+    display: grid;
   }
   nav a {
+    display: block;
+    padding: 0.5rem 0.35rem;
     text-decoration: none;
     color: var(--color-ink);
     font-weight: 600;
     font-size: 0.95rem;
   }
   @media (min-width: 1100px) {
+    .nav-wrap {
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-4);
+    }
+    .mobile-menu-toggle {
+      display: none;
+    }
     nav {
       display: flex;
+      grid-column: auto;
+      margin-top: 0;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      align-items: center;
+      gap: 0.85rem;
+      justify-content: center;
+    }
+    nav a {
+      display: inline;
+      padding: 0;
     }
   }
   @media (max-width: 720px) {
     .button {
       font-size: 0.9rem;
       padding: 0.6rem 0.9rem;
+    }
+    .brand img {
+      width: min(180px, 52vw);
     }
   }
 </style>
