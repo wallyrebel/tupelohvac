@@ -1,5 +1,5 @@
 ---
-sponsor_name: Tupelo Comfort Pros
+sponsor_name: Sponsor 3
 featured_homepage: true
 image: /images/sponsors/tupelo-comfort-pros.svg
 blurb: Installation and maintenance support for homes that need better airflow and comfort consistency.

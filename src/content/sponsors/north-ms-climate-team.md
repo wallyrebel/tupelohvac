@@ -1,5 +1,5 @@
 ---
-sponsor_name: North MS Climate Team
+sponsor_name: Sponsor 2
 featured_homepage: true
 image: /images/sponsors/north-ms-climate-team.svg
 blurb: Seasonal tune-ups and repair support for common AC and heating problems in North Mississippi.
