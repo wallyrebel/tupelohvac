@@ -10,6 +10,7 @@ placements:
   - featured_partners
   - header_banner
   - homepage_sidebar
+  - blog_in_content
 start_date: 2025-01-01
 end_date: 2027-12-31
 tracking_label: mmheatingcooling
