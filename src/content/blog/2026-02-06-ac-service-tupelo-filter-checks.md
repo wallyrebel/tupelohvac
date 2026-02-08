@@ -46,9 +46,11 @@ North Mississippi weather changes quickly, and a system that is borderline in sp
 ### FAQ
 
 #### How often should I change my filter?
+
 Most homes do well at 1-3 months, but pets, remodeling dust, and high runtime can shorten that cycle.
 
 #### Can a filter alone cause poor cooling?
+
 It can contribute significantly by reducing airflow, especially with high humidity and long runtime days.
 
 ### Need Help With Your Next Step?
