@@ -55,8 +55,8 @@ collections:
         widget: select
         multiple: true
         options: ["header_banner", "homepage_sidebar", "blog_in_content", "footer_banner", "featured_partners"]
-      - { label: Start Date, name: start_date, widget: date }
-      - { label: End Date, name: end_date, widget: date, required: false }
+      - { label: Start Date, name: start_date, widget: datetime, time_format: false }
+      - { label: End Date, name: end_date, widget: datetime, time_format: false, required: false }
       - { label: Tracking Label, name: tracking_label, widget: string, required: false }
       - { label: Body, name: body, widget: markdown, required: false }
 
