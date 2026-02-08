@@ -1,5 +1,5 @@
 ---
-sponsor_name: Sponsor 1
+sponsor_name: M&M Heating and Cooling
 featured_homepage: true
 image: /images/sponsors/mmheating-logo-320px.png
 blurb: Residential and light commercial cooling and heating support across Tupelo and nearby communities.
