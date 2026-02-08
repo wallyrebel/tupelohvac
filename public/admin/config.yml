@@ -42,7 +42,7 @@ collections:
     extension: md
     create: true
     slug: "{{slug}}"
-    media_folder: public/images/sponsors
+    media_folder: ../../../public/images/sponsors
     public_folder: /images/sponsors
     fields:
       - { label: Sponsor Name, name: sponsor_name, widget: string }

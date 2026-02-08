@@ -1,7 +1,7 @@
 ---
 sponsor_name: M&M Heating and Coooling
 featured_homepage: true
-image: images/sponsors/mmheating-logo-320px.png
+image: /images/sponsors/mmheating-logo-320px.png
 blurb: Residential and light commercial cooling and heating support across Tupelo and nearby communities.
 service_area: Tupelo, Saltillo, Verona, and Mooreville
 link_url: https://mmheatcool.net/
