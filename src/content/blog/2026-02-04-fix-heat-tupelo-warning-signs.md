@@ -48,12 +48,15 @@ During weather swings, systems with airflow or control issues may seem fine duri
 ### FAQ
 
 #### Is short-cycling always a serious problem?
+
 Not always, but repeated short-cycling can increase component wear and should be checked.
 
 #### Should I run the system if it smells unusual?
+
 If smell is strong or persists, stop and request service. Safety first.
 
 #### Can maintenance reduce winter failures?
+
 Routine fall checks often catch early issues before cold weather demand.
 
 ### Need Help With Your Next Step?
