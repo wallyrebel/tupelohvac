@@ -1,21 +1,23 @@
 ---
-title: "Fix Heat Tupelo: 7 Warning Signs to Watch Before the Next Cold Snap"
+title: 'Fix Heat Tupelo: 7 Warning Signs to Watch Before the Next Cold Snap'
 date: 2026-02-04
-description: "A practical winter checklist for Tupelo homeowners who need reliable heating performance."
+description: A practical winter checklist for Tupelo homeowners who need reliable heating performance.
 keywords:
   - Tupelo HVAC
   - fix heat Tupelo
   - heating warning signs
 slug: fix-heat-tupelo-warning-signs
-featured_image: /images/blog/tupelo-heat-warning-signs.svg
-featured_image_alt: "Heating warning signs checklist graphic"
+featured_image: /uploads/pexels-sezerdolunay-35737240.jpg
+featured_image_alt: Heating warning signs checklist graphic
 pexels_url: https://www.pexels.com/
 pexels_photographer: In-house Placeholder
 pexels_photographer_url: https://www.pexels.com/
+canonical: ''
 category: warning-signs
 season_tag: winter
 primary_keyword: fix heat Tupelo
 ---
+
 When temperatures drop overnight, small heating problems become obvious fast. If you need to **fix heat Tupelo** issues, early warning signs can help you act before your home gets uncomfortable. In Tupelo, MS, cold stretches are usually short, but they still put real pressure on systems that have not been checked recently.
 
 Use this quick review before the next front moves in:
