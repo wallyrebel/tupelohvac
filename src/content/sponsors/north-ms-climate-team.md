@@ -7,11 +7,10 @@ service_area: Tupelo, Belden, Guntown, and Plantersville
 link_url: https://example.com/north-ms-climate-team
 cta_label: Visit Partner
 placements:
-  - featured_partners
-  - blog_in_content
   - footer_banner
 start_date: 2025-01-01
-end_date: 2027-12-31
+end_date: 2026-02-06
 tracking_label: northms-climate-2026
 ---
+
 Sponsored placement profile.
