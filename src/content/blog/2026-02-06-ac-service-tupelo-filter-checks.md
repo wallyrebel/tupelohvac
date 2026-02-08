@@ -1,21 +1,23 @@
 ---
-title: "AC Service Tupelo: Filter Checks That Prevent Mid-Summer Breakdowns"
+title: 'AC Service Tupelo: Filter Checks That Prevent Mid-Summer Breakdowns'
 date: 2026-02-06
-description: "Simple AC filter and airflow checks Tupelo homeowners can use before peak summer heat."
+description: Simple AC filter and airflow checks Tupelo homeowners can use before peak summer heat.
 keywords:
   - Tupelo HVAC
   - AC service Tupelo
   - fix air conditioner Tupelo
 slug: ac-service-tupelo-filter-checks
-featured_image: /images/blog/tupelo-ac-filter-check.svg
-featured_image_alt: "HVAC filter checklist graphic for Tupelo homeowners"
+featured_image: /uploads/pexels-abnerlobo-16384335.jpg
+featured_image_alt: HVAC filter checklist graphic for Tupelo homeowners
 pexels_url: https://www.pexels.com/
 pexels_photographer: In-house Placeholder
 pexels_photographer_url: https://www.pexels.com/
+canonical: ''
 category: maintenance
 season_tag: summer
 primary_keyword: AC service Tupelo
 ---
+
 If your cooling system seems to run all afternoon, this is one of the fastest ways to improve comfort before the hot season. **AC service Tupelo** calls often start with weak airflow, rooms that stay warm, or a unit that never seems to catch up. In many cases, a dirty filter or blocked return grille is part of the problem.
 
 In Tupelo, MS, humidity adds extra load. That means airflow issues show up quickly, especially when heat indexes climb. Before requesting a visit, run this practical checklist:
