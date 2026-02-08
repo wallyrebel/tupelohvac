@@ -42,10 +42,12 @@ collections:
     extension: md
     create: true
     slug: "{{slug}}"
+    media_folder: public/images/sponsors
+    public_folder: /images/sponsors
     fields:
       - { label: Sponsor Name, name: sponsor_name, widget: string }
       - { label: Featured on Homepage, name: featured_homepage, widget: boolean, default: false, required: false }
-      - { label: Logo/Image, name: image, widget: string }
+      - { label: Logo/Image, name: image, widget: image, allow_multiple: false }
       - { label: Sponsor Blurb, name: blurb, widget: text, required: false }
       - { label: Service Area, name: service_area, widget: string, required: false }
       - { label: Link URL, name: link_url, widget: string }
