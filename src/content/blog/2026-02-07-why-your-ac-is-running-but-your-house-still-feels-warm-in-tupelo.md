@@ -1,6 +1,6 @@
 ---
 title: Why Your AC Is Running But Your House Still Feels Warm in Tupelo
-date: 2026-02-07
+date: 2026-02-09T20:12:00
 description: Troubleshoot why your AC runs but your Tupelo home stays warm. Practical tips and signs to watch for. Get expert help to fix air conditioner Tupelo.
 keywords:
   - fix air conditioner Tupelo
