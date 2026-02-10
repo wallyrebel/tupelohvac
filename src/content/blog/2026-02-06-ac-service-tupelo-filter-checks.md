@@ -12,7 +12,7 @@ featured_image_alt: HVAC filter checklist graphic for Tupelo homeowners
 pexels_url: https://www.pexels.com/
 pexels_photographer: In-house Placeholder
 pexels_photographer_url: https://www.pexels.com/
-canonical: ''
+canonical: https://tupelohvac.com/blog/ac-service-tupelo-filter-checks/
 category: maintenance
 season_tag: summer
 primary_keyword: AC service Tupelo

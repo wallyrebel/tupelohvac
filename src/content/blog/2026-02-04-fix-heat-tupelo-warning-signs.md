@@ -12,7 +12,7 @@ featured_image_alt: Heating warning signs checklist graphic
 pexels_url: https://www.pexels.com/
 pexels_photographer: In-house Placeholder
 pexels_photographer_url: https://www.pexels.com/
-canonical: ''
+canonical: https://tupelohvac.com/blog/fix-heat-tupelo-warning-signs/
 category: warning-signs
 season_tag: winter
 primary_keyword: fix heat Tupelo

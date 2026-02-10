@@ -1,5 +1,13 @@
 import { defineCollection, z } from "astro:content";
 
+const optionalUrlField = z.preprocess(
+  (value) => {
+    if (typeof value === "string" && value.trim() === "") return undefined;
+    return value;
+  },
+  z.string().url().optional()
+);
+
 const blog = defineCollection({
   type: "content",
   schema: z.object({
@@ -9,10 +17,10 @@ const blog = defineCollection({
     keywords: z.array(z.string()).default([]),
     featured_image: z.string().optional(),
     featured_image_alt: z.string().optional(),
-    pexels_url: z.string().url().optional(),
+    pexels_url: optionalUrlField,
     pexels_photographer: z.string().optional(),
-    pexels_photographer_url: z.string().url().optional(),
-    canonical: z.string().url().optional(),
+    pexels_photographer_url: optionalUrlField,
+    canonical: optionalUrlField,
     category: z.string(),
     season_tag: z.string(),
     primary_keyword: z.string()
