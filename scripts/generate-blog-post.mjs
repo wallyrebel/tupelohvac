@@ -219,7 +219,10 @@ async function chooseTopic() {
   };
 }
 
-function buildPrompt({ category, season_tag, seed, primary_keyword, servicePage }, strictInstruction = "") {
+function buildPrompt({ category, season_tag, seed, primary_keyword, servicePage, recentTitles }, strictInstruction = "") {
+  const avoidBlock = Array.isArray(recentTitles) && recentTitles.length
+    ? `\nDo NOT use a title similar to any of these recent titles:\n${recentTitles.slice(-10).map((t) => `- ${t}`).join("\n")}\n`
+    : "";
   return `
 Write one original HVAC blog post for TupeloHVAC.com.
 
@@ -228,7 +231,7 @@ Category: ${category}
 Season tag: ${season_tag}
 Primary keyword: ${primary_keyword}
 Required repair/service link: ${servicePage}
-
+${avoidBlock}
 Rules:
 - 300 to 500 words total.
 - Helpful, trustworthy, plain language.
@@ -245,6 +248,7 @@ Rules:
   3) ${servicePage}
   4) /tupelo-hvac-guide/
 - Mention the primary keyword in the title and once in the first 120 words.
+- The title MUST be creative and unique. Avoid generic HVAC titles.
 
 Output format exactly:
 TITLE: <one line title>
@@ -443,7 +447,7 @@ async function main() {
     "Make this more specific to Tupelo/North Mississippi weather and include practical steps and warning signs. No fluff. No business names. No pricing. No guarantees.";
 
   let modelOutput;
-  const prompt = buildPrompt({ ...topic, servicePage });
+  const prompt = buildPrompt({ ...topic, servicePage, recentTitles: topic.recentTitles });
   try {
     modelOutput = await callOpenAI(prompt, OPENAI_PRIMARY_MODEL);
   } catch {
@@ -465,7 +469,7 @@ async function main() {
   });
 
   if (!checks.passed) {
-    const retryPrompt = buildPrompt({ ...topic, servicePage }, strictInstruction);
+    const retryPrompt = buildPrompt({ ...topic, servicePage, recentTitles: topic.recentTitles }, strictInstruction);
     let retryRaw;
     try {
       retryRaw = await callOpenAI(retryPrompt, OPENAI_PRIMARY_MODEL);
@@ -480,8 +484,31 @@ async function main() {
       recentTitles: topic.recentTitles,
       servicePage
     });
+
+    // If still failing only on title similarity, try once more with a uniqueness-focused prompt
     if (!checks.passed) {
-      throw new Error(`Quality gate failed after regeneration: ${checks.failed.join(" | ")}`);
+      const onlyTitleIssue = checks.failed.length === 1 && checks.failed[0] === "Title too similar to a recent post.";
+      if (onlyTitleIssue) {
+        const uniquenessInstruction = `${strictInstruction}\nCRITICAL: Your title MUST be completely different from recent posts. Use a fresh angle, unique phrasing, and a different structure. Do NOT reuse common HVAC title patterns.`;
+        const uniquePrompt = buildPrompt({ ...topic, servicePage, recentTitles: topic.recentTitles }, uniquenessInstruction);
+        let uniqueRaw;
+        try {
+          uniqueRaw = await callOpenAI(uniquePrompt, OPENAI_PRIMARY_MODEL);
+        } catch {
+          uniqueRaw = await callOpenAI(uniquePrompt, OPENAI_FALLBACK_MODEL);
+        }
+        parsed = parseModelOutput(uniqueRaw);
+        parsed.body = ensureRequiredLinks(parsed.body, servicePage);
+        slug = toSlug(parsed.title);
+        checks = qualityChecks({
+          ...parsed,
+          recentTitles: topic.recentTitles,
+          servicePage
+        });
+      }
+      if (!checks.passed) {
+        throw new Error(`Quality gate failed after regeneration: ${checks.failed.join(" | ")}`);
+      }
     }
   }
 
