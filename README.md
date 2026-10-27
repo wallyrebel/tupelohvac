@@ -216,7 +216,7 @@ GitHub repo secrets required:
 Model strategy:
 
 - Primary: `gpt-5-mini`
-- Fallback: `gpt-4.1-nano`
+- Fallback: `gpt-6-luna`
 
 ### Quality gate rules in script
 

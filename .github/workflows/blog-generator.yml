@@ -29,7 +29,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           OPENAI_PRIMARY_MODEL: gpt-5-mini
-          OPENAI_FALLBACK_MODEL: gpt-4.1-nano
+          OPENAI_FALLBACK_MODEL: gpt-6-luna
         run: npm run generate:blog
 
       - name: Commit changes

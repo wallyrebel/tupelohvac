@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { resolveRetiredModel, modelOptions } from "./model-options.mjs";
 
 const ROOT = process.cwd();
 const BLOG_DIR = path.join(ROOT, "src", "content", "blog");
@@ -10,7 +11,7 @@ const BLOG_IMAGE_DIR = path.join(ROOT, "public", "images", "blog");
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 const OPENAI_PRIMARY_MODEL = process.env.OPENAI_PRIMARY_MODEL || "gpt-5-mini";
-const OPENAI_FALLBACK_MODEL = process.env.OPENAI_FALLBACK_MODEL || "gpt-4.1-nano";
+const OPENAI_FALLBACK_MODEL = process.env.OPENAI_FALLBACK_MODEL || "gpt-6-luna";
 
 const CATEGORY_SERVICE_PAGE = {
   maintenance: "/hvac-maintenance-tupelo/",
@@ -261,6 +262,7 @@ ${strictInstruction}
 }
 
 async function callOpenAI(prompt, model) {
+  model = resolveRetiredModel(model);
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -269,7 +271,7 @@ async function callOpenAI(prompt, model) {
     },
     body: JSON.stringify({
       model,
-      temperature: 0.6,
+      ...modelOptions(model),
       messages: [
         {
           role: "system",
@@ -286,6 +288,9 @@ async function callOpenAI(prompt, model) {
     throw new Error(`OpenAI request failed (${model}): ${text}`);
   }
   const data = await response.json();
+  if (model === "gpt-6-luna" && data?.choices?.[0]?.finish_reason !== "stop") {
+    throw new Error("Replacement model returned an incomplete response.");
+  }
   const content = data?.choices?.[0]?.message?.content;
   if (!content || typeof content !== "string") {
     throw new Error(`OpenAI response missing content (${model}).`);
