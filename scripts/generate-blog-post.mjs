@@ -1,6 +1,15 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveRetiredModel, modelOptions } from "./model-options.mjs";
+import {
+  currentSeason,
+  feedbackForFailures,
+  hasFaqSection,
+  isInSeason,
+  outOfSeasonInTitle,
+  pickSeasonTag,
+  seasonInstruction
+} from "./editorial-rules.mjs";
 
 const ROOT = process.cwd();
 const BLOG_DIR = path.join(ROOT, "src", "content", "blog");
@@ -187,8 +196,12 @@ async function chooseTopic() {
 
   const blockedCategories = new Set(recent10.map((entry) => entry.category));
   const candidateCategories = topicPool.categories.filter((item) => !blockedCategories.has(item.category));
-  const pool = candidateCategories.length ? candidateCategories : topicPool.categories;
-  if (!pool.length) throw new Error("No topic categories available in src/content/.topic-pool.json");
+  const rotationPool = candidateCategories.length ? candidateCategories : topicPool.categories;
+  if (!rotationPool.length) throw new Error("No topic categories available in src/content/.topic-pool.json");
+  // Prefer categories that fit the time of year; fall back to the rotation.
+  const season = currentSeason();
+  const inSeason = rotationPool.filter((item) => isInSeason(item.season_tags, season));
+  const pool = inSeason.length ? inSeason : rotationPool;
 
   let selected = null;
   for (const categoryEntry of pool) {
@@ -206,13 +219,13 @@ async function chooseTopic() {
     selected = { categoryEntry: fallbackCategory, seed: randomFrom(fallbackCategory.prompt_seeds) };
   }
 
-  const previousSeason = topicLog.length ? topicLog[topicLog.length - 1].season_tag : "";
-  const seasonOptions = selected.categoryEntry.season_tags.filter((item) => item !== previousSeason);
-  const season_tag = randomFrom(seasonOptions.length ? seasonOptions : selected.categoryEntry.season_tags);
+  // Write for the season readers are in, not a randomly chosen one.
+  const season_tag = pickSeasonTag(selected.categoryEntry.season_tags, season);
   const primary_keyword = randomFrom(selected.categoryEntry.primary_keywords);
 
   return {
     category: selected.categoryEntry.category,
+    season,
     season_tag,
     seed: selected.seed,
     primary_keyword,
@@ -220,7 +233,8 @@ async function chooseTopic() {
   };
 }
 
-function buildPrompt({ category, season_tag, seed, primary_keyword, servicePage, recentTitles }, strictInstruction = "") {
+function buildPrompt({ category, season, season_tag, seed, primary_keyword, servicePage, recentTitles }, strictInstruction = "") {
+  const seasonNote = seasonInstruction(new Date(), season || currentSeason());
   const avoidBlock = Array.isArray(recentTitles) && recentTitles.length
     ? `\nDo NOT use a title similar to any of these recent titles:\n${recentTitles.slice(-10).map((t) => `- ${t}`).join("\n")}\n`
     : "";
@@ -232,9 +246,10 @@ Category: ${category}
 Season tag: ${season_tag}
 Primary keyword: ${primary_keyword}
 Required repair/service link: ${servicePage}
+${seasonNote}
 ${avoidBlock}
 Rules:
-- 300 to 500 words total.
+- 350 to 450 words total (posts over 500 words are rejected).
 - Helpful, trustworthy, plain language.
 - Strong local relevance to Tupelo, MS / North Mississippi weather.
 - No business names.
@@ -242,7 +257,8 @@ Rules:
 - No guarantees ("always", "will fix", "guaranteed").
 - Include at least two H2 subheadings.
 - Include at least one numbered or bulleted practical checklist.
-- Include a FAQ section with exactly 2 or 3 Q&As.
+- Include a section headed exactly "## FAQ" with 2 or 3 Q&As.
+- Introduce the checklist with the word "checklist" or "steps".
 - Include CTA block near the end with these links:
   1) /#request-service
   2) /contact/
@@ -313,7 +329,7 @@ function parseModelOutput(raw) {
   return { title, description, body };
 }
 
-function qualityChecks({ title, body, description, recentTitles, servicePage }) {
+function qualityChecks({ title, body, description, recentTitles, servicePage, season = currentSeason() }) {
   const checks = [];
   const wc = wordCount(body);
   const subheadCount = (body.match(/^##\s+/gm) || []).length;
@@ -322,7 +338,9 @@ function qualityChecks({ title, body, description, recentTitles, servicePage }) 
   checks.push({ ok: subheadCount >= 2, reason: "Needs at least two H2 subheadings." });
   checks.push({ ok: /^(\d+\.\s+|- )/m.test(body), reason: "Needs numbered or bulleted list." });
   checks.push({ ok: wc >= 300 && wc <= 500, reason: `Word count out of range (${wc}).` });
-  checks.push({ ok: /##\s*FAQ/i.test(body), reason: "Missing FAQ section." });
+  checks.push({ ok: hasFaqSection(body), reason: "Missing FAQ section." });
+  const wrongSeason = outOfSeasonInTitle(title, season);
+  checks.push({ ok: !wrongSeason, reason: `Title names a different season (${wrongSeason}) than the current one (${season}).` });
   checks.push({
     ok: hasRequiredLink(body, "/#request-service"),
     reason: "Missing Request Service link."
@@ -474,7 +492,10 @@ async function main() {
   });
 
   if (!checks.passed) {
-    const retryPrompt = buildPrompt({ ...topic, servicePage, recentTitles: topic.recentTitles }, strictInstruction);
+    // Name the checks that failed instead of rolling the same prompt again.
+    console.warn(`Quality gate failed on first draft: ${checks.failed.join(" | ")}`);
+    const retryInstruction = [strictInstruction, feedbackForFailures(checks.failed)].filter(Boolean).join("\n\n");
+    const retryPrompt = buildPrompt({ ...topic, servicePage, recentTitles: topic.recentTitles }, retryInstruction);
     let retryRaw;
     try {
       retryRaw = await callOpenAI(retryPrompt, OPENAI_PRIMARY_MODEL);
