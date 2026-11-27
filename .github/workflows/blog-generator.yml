@@ -8,9 +8,15 @@ on:
 permissions:
   contents: write
 
+# Never let a manual run and the schedule generate and push at the same time.
+concurrency:
+  group: blog-generator
+  cancel-in-progress: false
+
 jobs:
   generate-and-publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,6 +29,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Check editorial rules
+        run: node --test tests/model-options.test.mjs tests/editorial-rules.test.mjs
 
       - name: Generate post
         env:
